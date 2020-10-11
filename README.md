@@ -1,9 +1,6 @@
 Pakadali
 ========
 
-Pakadali
-========
-
 Pakadali is toy project that provides some APIs that may be useful to developers.
 The following services are available:
 
@@ -34,6 +31,20 @@ Or you can do it programmatically
 ```sh
 $ curl -X POST -F "file=@./ExportedChat.txt" https://pakadali.herokuapp.com/wa/chat2json
 ```
+
+
+## Building and running locally
+
+This project requires JDK 15+ to build.
+
+```sh
+$ git clone https://github.com/zikani03/pakadali
+$ cd pakadali
+$ ./gradlew build
+$ java -Dspark.port=8080 -jar build/libs/pakadali-0.1.0-SNAPSHOT-all.jar
+```
+
+Try visiting `http://localhost:8080/img/500x500` you should get 500 x 500 PNG image.
 
 ----
 
