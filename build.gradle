@@ -1,0 +1,68 @@
+plugins {
+    id "idea"
+    id "java"
+    id "application"
+    id "com.github.johnrengelman.shadow" version "5.2.0"
+}
+
+version "$projectVersion"
+group "com.nndi-tech.labs"
+
+repositories {
+    mavenCentral()
+    maven { url "https://jcenter.bintray.com" }
+    maven { url "https://jitpack.io" }
+}
+
+configurations {
+    // for dependencies that are needed for development only
+    developmentOnly
+}
+
+dependencies {
+    implementation group: 'com.sparkjava', name: 'spark-core', version: '2.9.3'
+    implementation 'com.googlecode.ez-vcard:ez-vcard:0.11.0'
+    implementation "net.jodah:failsafe:$failsafeVersion"
+    implementation "org.jsoup:jsoup:1.11.3"
+    implementation "com.github.kenglxn.QRGen:javase:2.6.0"
+    implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '2.8.0'
+    implementation group: 'am.ik.yavi', name: 'yavi', version: '0.4.0'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.14'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.14'
+
+    runtimeOnly("org.thymeleaf:thymeleaf:3.0.11.RELEASE")
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+    // testImplementation "org.junit.jupiter:junit-jupiter-api"
+    // testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+}
+
+test.classpath += configurations.developmentOnly
+
+mainClassName = "me.zikani.labs.pakadali.PakadaliApplication"
+
+// use JUnit 5 platform
+test {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile){
+    options.encoding = "UTF-8"
+    options.compilerArgs.add('-parameters')
+}
+
+shadowJar {
+    mergeServiceFiles()
+}
+
+task stage(dependsOn: ['shadowJar', 'clean'])
+shadowJar.mustRunAfter clean
+
+run.classpath += configurations.developmentOnly
+run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
+
+tasks.withType(JavaExec) {
+    classpath += configurations.developmentOnly
+    jvmArgs('-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
+}
