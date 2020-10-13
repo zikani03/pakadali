@@ -1,4 +1,4 @@
-package me.zikani.labs.pakadali.whatsapp;
+package me.zikani.labs.pakadali.api.whatsapp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

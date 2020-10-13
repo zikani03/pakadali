@@ -1,4 +1,4 @@
-package me.zikani.labs.pakadali.qr;
+package me.zikani.labs.pakadali.web.qr;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import net.glxn.qrgen.core.image.ImageType;
@@ -14,7 +14,7 @@ import java.io.IOException;
 
 import static java.util.Objects.requireNonNull;
 import static me.zikani.labs.pakadali.PakadaliApplication.MEDIA_TYPE_IMAGE_PNG;
-import static me.zikani.labs.pakadali.utils.HashUtil.sha256;
+import static me.zikani.labs.pakadali.api.utils.HashUtil.sha256;
 
 public class QRCodeRoute implements Route {
     private static final int QR_MAX_SIZE = 9999;
