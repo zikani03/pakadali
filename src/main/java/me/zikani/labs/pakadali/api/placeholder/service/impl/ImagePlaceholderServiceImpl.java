@@ -1,7 +1,7 @@
-package me.zikani.labs.pakadali.api.placeholder.impl;
+package me.zikani.labs.pakadali.api.placeholder.service.impl;
 
 import com.github.benmanes.caffeine.cache.Cache;
-import me.zikani.labs.pakadali.api.placeholder.interfaces.PNGImagePlaceHolderService;
+import me.zikani.labs.pakadali.api.placeholder.service.interfaces.PNGImagePlaceHolderService;
 import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 
 import static java.lang.Integer.parseInt;
+
 
 public class ImagePlaceholderServiceImpl implements PNGImagePlaceHolderService {
     private static final int LIGHT_GRAY_RGB = Color.lightGray.getRGB();

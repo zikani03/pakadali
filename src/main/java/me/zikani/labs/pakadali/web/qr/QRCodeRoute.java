@@ -1,23 +1,20 @@
 package me.zikani.labs.pakadali.web.qr;
 
 import com.github.benmanes.caffeine.cache.Cache;
-import net.glxn.qrgen.core.image.ImageType;
-import net.glxn.qrgen.javase.QRCode;
+import me.zikani.labs.pakadali.api.qr.service.impl.QRCodeServiceImpl;
+import me.zikani.labs.pakadali.api.qr.service.interfaces.QRCodeService;
+import me.zikani.labs.pakadali.api.qr.validator.impl.QRCodeValidatorImpl;
+import me.zikani.labs.pakadali.api.qr.validator.interfaces.QRCodeValidator;
 import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Spark;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
 import static java.util.Objects.requireNonNull;
 import static me.zikani.labs.pakadali.PakadaliApplication.MEDIA_TYPE_IMAGE_PNG;
-import static me.zikani.labs.pakadali.api.utils.HashUtil.sha256;
 
 public class QRCodeRoute implements Route {
-    private static final int QR_MAX_SIZE = 9999;
     private final Cache<String, byte[]> cache;
 
     public QRCodeRoute(Cache<String, byte[]> qrCodeCache) {
@@ -25,33 +22,26 @@ public class QRCodeRoute implements Route {
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
-        final int widthAndHeight = Integer.parseInt(request.params("size"));
+    public Object handle(Request request, Response response) {
         final String content = request.queryMap("content").value();
-        final String hashed = sha256(widthAndHeight + "/" + content);
-        final String qrCacheID = String.format("qr__%s", hashed);
-        byte[] image = cache.getIfPresent(qrCacheID);
-
-        if (image == null) {
-            if (widthAndHeight < 0 || widthAndHeight > QR_MAX_SIZE) {
-                return Spark.halt(400);
-            }
-
-            try(ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-                QRCode.from(content)
-                    .withSize(widthAndHeight, widthAndHeight)
-                    .to(ImageType.PNG)
-                    .writeTo(bos);
-                image = bos.toByteArray();
-                cache.put(qrCacheID + "", image);
-            } catch(IOException e) {
-                LoggerFactory.getLogger(getClass()).error(e.getMessage());
-                return Spark.halt(500);
-            }
+        QRCodeValidator qrCodeValidator = new QRCodeValidatorImpl();
+        boolean validationResult = qrCodeValidator.isQRCodeSizeValid(request.params("size"));
+        if(!validationResult)
+        {
+            return Spark.halt(400);
         }
-
-        response.type(MEDIA_TYPE_IMAGE_PNG);
-        response.raw().getOutputStream().write(image);
-        return response;
+        QRCodeService qrCodeService = new QRCodeServiceImpl();
+        final int widthAndHeight = Integer.parseInt(request.params("size"));
+        try {
+            byte[] image = qrCodeService.getQRCode(widthAndHeight,content,cache);
+            response.type(MEDIA_TYPE_IMAGE_PNG);
+            response.raw().getOutputStream().write(image);
+            return response;
+        }
+        catch (Exception e)
+        {
+            LoggerFactory.getLogger(getClass()).error(e.getMessage());
+            return Spark.halt(500);
+        }
     }
 }

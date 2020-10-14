@@ -1,9 +1,8 @@
-package me.zikani.labs.pakadali.api.utils;
+package me.zikani.labs.pakadali.api.placeholder.validator.impl;
 
 import static java.lang.Integer.parseInt;
 
-
-public class DimensionParser {
+public class PlaceholderValidator {
     private static final int MAX_WIDTH_HEIGHT = 9999;
 
     // Parse and validate dimensions in given string in (AxB) format
