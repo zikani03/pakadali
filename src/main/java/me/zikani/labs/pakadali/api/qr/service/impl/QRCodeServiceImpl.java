@@ -1,7 +1,7 @@
 package me.zikani.labs.pakadali.api.qr.service.impl;
 
 import com.github.benmanes.caffeine.cache.Cache;
-import me.zikani.labs.pakadali.api.qr.service.interfaces.QRCodeService;
+import me.zikani.labs.pakadali.api.qr.service.QRCodeService;
 import net.glxn.qrgen.core.image.ImageType;
 import net.glxn.qrgen.javase.QRCode;
 

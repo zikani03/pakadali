@@ -1,7 +1,7 @@
 package me.zikani.labs.pakadali.api.placeholder.service.impl;
 
 import com.github.benmanes.caffeine.cache.Cache;
-import me.zikani.labs.pakadali.api.placeholder.service.interfaces.PNGImagePlaceHolderService;
+import me.zikani.labs.pakadali.api.placeholder.service.PNGImagePlaceHolderService;
 import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;

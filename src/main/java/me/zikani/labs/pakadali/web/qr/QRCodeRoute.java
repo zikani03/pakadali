@@ -2,9 +2,9 @@ package me.zikani.labs.pakadali.web.qr;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import me.zikani.labs.pakadali.api.qr.service.impl.QRCodeServiceImpl;
-import me.zikani.labs.pakadali.api.qr.service.interfaces.QRCodeService;
+import me.zikani.labs.pakadali.api.qr.service.QRCodeService;
 import me.zikani.labs.pakadali.api.qr.validator.impl.QRCodeValidatorImpl;
-import me.zikani.labs.pakadali.api.qr.validator.interfaces.QRCodeValidator;
+import me.zikani.labs.pakadali.api.qr.validator.QRCodeValidator;
 import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;

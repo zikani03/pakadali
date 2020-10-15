@@ -1,4 +1,4 @@
-package me.zikani.labs.pakadali.api.qr.service.interfaces;
+package me.zikani.labs.pakadali.api.qr.service;
 
 import com.github.benmanes.caffeine.cache.Cache;
 

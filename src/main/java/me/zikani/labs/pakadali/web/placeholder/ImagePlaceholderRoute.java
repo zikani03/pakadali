@@ -3,15 +3,13 @@ package me.zikani.labs.pakadali.web.placeholder;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import me.zikani.labs.pakadali.api.placeholder.service.impl.ImagePlaceholderServiceImpl;
-import me.zikani.labs.pakadali.api.placeholder.service.interfaces.PNGImagePlaceHolderService;
+import me.zikani.labs.pakadali.api.placeholder.service.PNGImagePlaceHolderService;
 import me.zikani.labs.pakadali.api.placeholder.validator.impl.PlaceholderValidator;
 import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Spark;
-
-import java.awt.*;
 
 import static java.lang.Integer.parseInt;
 import static me.zikani.labs.pakadali.PakadaliApplication.MEDIA_TYPE_IMAGE_PNG;
