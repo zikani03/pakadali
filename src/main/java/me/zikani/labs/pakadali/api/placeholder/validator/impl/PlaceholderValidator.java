@@ -6,21 +6,23 @@ public class PlaceholderValidator {
     private static final int MAX_WIDTH_HEIGHT = 9999;
 
     // Parse and validate dimensions in given string in (AxB) format
-    public static int[] parseImageWidthAndHeight(String spec) {
-        if (spec == null) return null;
+    public static boolean isWidthAndHeightValid(String spec) {
+        if (spec == null) return false;
 
         if (!spec.toLowerCase().contains("x")) {
-            return null;
+            return false;
         }
         String[] wh = spec.toLowerCase().split("x", 2);
-        if (wh.length < 2) return null;
-        // later can provide regex to check string contains numbers
+        if (wh.length < 2) return false;
+        if (!wh[0].matches("[0-9]+") && wh[0].length() > 1) {
+            return false;
+        }
+        if (!wh[1].matches("[0-9]+") && wh[1].length() > 1) {
+            return false;
+        }
         int[] dimensions = new int[]{ parseInt(wh[0]), parseInt(wh[1]) };
         int width = dimensions[0];
         int height = dimensions[1];
-        if ((width < 0 || width > MAX_WIDTH_HEIGHT) || (height < 0 || height > MAX_WIDTH_HEIGHT)) {
-            return null;
-        }
-        return dimensions;
+        return (width >= 0 && width <= MAX_WIDTH_HEIGHT) && (height >= 0 && height <= MAX_WIDTH_HEIGHT);
     }
 }

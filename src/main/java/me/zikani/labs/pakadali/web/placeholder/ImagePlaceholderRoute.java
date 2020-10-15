@@ -21,11 +21,14 @@ public class ImagePlaceholderRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        int[] dimension = PlaceholderValidator.parseImageWidthAndHeight(request.params("wxh"));
-        if(dimension == null)
+        String widthAndHeight = request.params("wxh");
+        boolean dimensionValidateResult = PlaceholderValidator.isWidthAndHeightValid(widthAndHeight);
+        if(!dimensionValidateResult)
         {
             return Spark.halt(400);
         }
+        String[] wh = widthAndHeight.toLowerCase().split("x", 2);
+        int[] dimension = new int[]{ parseInt(wh[0]), parseInt(wh[1]) };
         try
         {
             PNGImagePlaceHolderService imagePlaceHolderService = new ImagePlaceholderServiceImpl();
