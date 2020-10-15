@@ -1,6 +1,8 @@
-package me.zikani.labs.pakadali.whatsapp;
+package me.zikani.labs.pakadali.web.whatsapp;
 
 import com.google.gson.Gson;
+import me.zikani.labs.pakadali.api.whatsapp.ChatReader;
+import me.zikani.labs.pakadali.api.whatsapp.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Request;
@@ -10,11 +12,7 @@ import spark.Spark;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.Part;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.List;
-
-import static org.eclipse.jetty.http.MimeTypes.Type.APPLICATION_JSON;
 
 public class ChatToJsonRoute implements Route {
     private static final Logger LOGGER = LoggerFactory.getLogger(ChatToJsonRoute.class);;

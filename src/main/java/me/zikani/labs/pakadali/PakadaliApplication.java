@@ -2,9 +2,9 @@ package me.zikani.labs.pakadali;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import me.zikani.labs.pakadali.placeholder.ImagePlaceholderRoute;
-import me.zikani.labs.pakadali.qr.QRCodeRoute;
-import me.zikani.labs.pakadali.whatsapp.ChatToJsonRoute;
+import me.zikani.labs.pakadali.web.placeholder.ImagePlaceholderRoute;
+import me.zikani.labs.pakadali.web.qr.QRCodeRoute;
+import me.zikani.labs.pakadali.web.whatsapp.ChatToJsonRoute;
 import spark.Spark;
 
 import static java.lang.Integer.parseInt;

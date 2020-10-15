@@ -1,4 +1,4 @@
-package me.zikani.labs.pakadali.utils;
+package me.zikani.labs.pakadali.api.utils;
 
 public final class Hex {
     Hex() { }
