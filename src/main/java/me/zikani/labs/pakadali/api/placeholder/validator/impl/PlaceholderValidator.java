@@ -5,7 +5,7 @@ import static java.lang.Integer.parseInt;
 public class PlaceholderValidator {
     private static final int MAX_WIDTH_HEIGHT = 9999;
 
-    // Parse and validate dimensions in given string in (AxB) format
+    // Validate dimensions in given string in (AxB) format
     public static boolean isWidthAndHeightValid(String spec) {
         if (spec == null) return false;
 
