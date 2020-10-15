@@ -26,8 +26,7 @@ public class QRCodeRoute implements Route {
         final String content = request.queryMap("content").value();
         QRCodeValidator qrCodeValidator = new QRCodeValidatorImpl();
         boolean validationResult = qrCodeValidator.isQRCodeSizeValid(request.params("size"));
-        if(!validationResult)
-        {
+        if(!validationResult) {
             return Spark.halt(400);
         }
         QRCodeService qrCodeService = new QRCodeServiceImpl();
@@ -38,8 +37,7 @@ public class QRCodeRoute implements Route {
             response.raw().getOutputStream().write(image);
             return response;
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage());
             return Spark.halt(500);
         }

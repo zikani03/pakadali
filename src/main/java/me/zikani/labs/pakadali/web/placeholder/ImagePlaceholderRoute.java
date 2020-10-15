@@ -23,22 +23,19 @@ public class ImagePlaceholderRoute implements Route {
     public Object handle(Request request, Response response) throws Exception {
         String widthAndHeight = request.params("wxh");
         boolean dimensionValidateResult = PlaceholderValidator.isWidthAndHeightValid(widthAndHeight);
-        if(!dimensionValidateResult)
-        {
+        if(!dimensionValidateResult) {
             return Spark.halt(400);
         }
         String[] wh = widthAndHeight.toLowerCase().split("x", 2);
         int[] dimension = new int[]{ parseInt(wh[0]), parseInt(wh[1]) };
-        try
-        {
+        try {
             PNGImagePlaceHolderService imagePlaceHolderService = new ImagePlaceholderServiceImpl();
             byte[] image =imagePlaceHolderService.getImagePlaceHolder(dimension[0],dimension[1], cache);
             response.type(MEDIA_TYPE_IMAGE_PNG);
             response.raw().getOutputStream().write(image);
             return response;
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage());
             return Spark.halt(500);
         }
