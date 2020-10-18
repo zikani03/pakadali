@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Pakadali: WhatsApp Chat to CSV tool for developers</title>
+</head>
+<body>
+  <div class="container">
+    <h1 class="is-size-2">Pakadali API: WhatsApp Chat Export to CSV</h1>
+    <p>This page allows you to Upload a WhatsApp Chat and convert it to CSV.<br/>
+      First you have to export your Chat (without media) to a text file (<em>Export chat &gt Without Media </em>)<br/>
+      After that upload it on this form, the system will process it and return a CSV file.
+    </p>
+    <p class="notification is-warning"><strong>Note</strong> It may take a while (or actually fail) on very large chats.</p>
+    <form action="/wa/chat2csv" method="post" enctype="multipart/form-data">
+        <div class="control">
+            <input type="file" name="file">
+        </div>
+      <button class="button is-primary">Submit</button>
+    </form>
+  </div>
+</body>
+</html>

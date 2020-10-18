@@ -1,8 +1,8 @@
 package me.zikani.labs.pakadali.web.whatsapp;
 
-import com.google.gson.Gson;
 import me.zikani.labs.pakadali.api.whatsapp.ChatReader;
 import me.zikani.labs.pakadali.api.whatsapp.Message;
+import me.zikani.labs.pakadali.api.whatsapp.MessagesExporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Request;
@@ -14,10 +14,14 @@ import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.Part;
 import java.util.List;
 
-public class ChatToJsonRoute implements Route {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ChatToJsonRoute.class);;
+public class ChatExportRoute implements Route {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChatExportRoute.class);;
     private final ChatReader chatReader = new ChatReader();
-    private final Gson gson = new Gson();
+    private final MessagesExporter messagesExporter;
+
+    public ChatExportRoute(MessagesExporter messagesExporter) {
+        this.messagesExporter = messagesExporter;
+    }
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
@@ -28,9 +32,10 @@ public class ChatToJsonRoute implements Route {
         if (file.getInputStream() == null)
             return Spark.halt(400);
 
-        LOGGER.info("Reading chat messages from {} Uploaded from {}", file.getSubmittedFileName(), request.ip());
+        LOGGER.debug("Reading chat messages from {} Uploaded from {}", file.getSubmittedFileName(), request.ip());
         List<Message> messages = chatReader.readMessages(file.getInputStream());
-        response.type("application/json;charset=utf-8");
-        return gson.toJson(messages);
+
+        response.type(messagesExporter.mediaType());
+        return messagesExporter.export(messages);
     }
 }

@@ -2,9 +2,11 @@ package me.zikani.labs.pakadali;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import me.zikani.labs.pakadali.api.whatsapp.CsvMessagesExporter;
+import me.zikani.labs.pakadali.api.whatsapp.JsonMessagesExporter;
 import me.zikani.labs.pakadali.web.placeholder.ImagePlaceholderRoute;
 import me.zikani.labs.pakadali.web.qr.QRCodeRoute;
-import me.zikani.labs.pakadali.web.whatsapp.ChatToJsonRoute;
+import me.zikani.labs.pakadali.web.whatsapp.ChatExportRoute;
 import spark.Spark;
 
 import static java.lang.Integer.parseInt;
@@ -25,7 +27,8 @@ public class PakadaliApplication {
         Spark.get("/qr/generate/:size", new QRCodeRoute(qrCodeCache));
         Spark.post("/qr/generate/:size", new QRCodeRoute(qrCodeCache));
 
-        Spark.post("/wa/chat2json", new ChatToJsonRoute());
+        Spark.post("/wa/chat2json", new ChatExportRoute(new JsonMessagesExporter()));
+        Spark.post("/wa/chat2csv", new ChatExportRoute(new CsvMessagesExporter()));
 
         Spark.notFound((request, response) -> {
             return "Not found";
