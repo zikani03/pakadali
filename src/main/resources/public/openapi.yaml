@@ -1,0 +1,50 @@
+openapi: 3.0.0
+info:
+  title: Pakadali
+  version: '0.2.0'
+  description: API Document for Pakadali
+  contact:
+    name: Zikani Nyirenda Mwase
+    url: https://github.com/zikani03/pakadali
+    email: zikani@nndi-tech.com
+servers:
+  - url: 'https://pakadali.herokuapp.com'
+    description: Live on Heroku
+
+paths:
+  /img/{wxh}:
+    get:
+      operationId: GeneratePlaceholder
+      summary: Generate an Image Placeholder
+      tags:
+        - Placeholder
+      responses:
+        '200':
+          description: Placeholder image
+  /qr/generate/:size:
+    get:
+      operationId: GenerateQR
+      summary: Generate a QR Code image
+      tags:
+        - QR Code
+      responses:
+        '200':
+          description: QR Code image
+  /wa/chat2json:
+    get:
+      operationId: WhatsApp to JSON
+      summary: Extract Data from WhatsApp Chat Text file to JSON
+      tags:
+        - WhatsApp
+      responses:
+        '200':
+          description: JSON file with WhatsApp messages from chat as objects
+  /wa/chat2csv:
+    get:
+      operationId: WhatsApp to CSV
+      summary: Extract Data from WhatsApp Chat Text file to CSV
+      tags:
+        - WhatsApp
+      responses:
+        '200':
+          description: CSV file with WhatsApp messages from chat as rows
