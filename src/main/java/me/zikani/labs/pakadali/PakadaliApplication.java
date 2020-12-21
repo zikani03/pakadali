@@ -9,6 +9,8 @@ import me.zikani.labs.pakadali.web.qr.QRCodeRoute;
 import me.zikani.labs.pakadali.web.whatsapp.ChatExportRoute;
 import spark.Spark;
 
+import java.time.Duration;
+
 import static java.lang.Integer.parseInt;
 import static java.lang.System.getProperty;
 
@@ -17,15 +19,17 @@ public class PakadaliApplication {
 
     public static void main(String[] args) {
         Spark.port(parseInt(getProperty("spark.port", "4567")));
-        // Cache sharedCache;
+        Cache<String, byte[]> sharedCache = Caffeine.newBuilder()
+            .expireAfterWrite(Duration.ofMinutes(30))
+            .maximumSize(420)
+            .build();
         // Placeholder route
         Spark.staticFileLocation("public");
-        Spark.get("/img/:wxh", new ImagePlaceholderRoute());
+        Spark.get("/img/:wxh", new ImagePlaceholderRoute(sharedCache));
 
         // QR Code Routes
-        Cache<String, byte[]> qrCodeCache = Caffeine.newBuilder().maximumSize(1000).build();
-        Spark.get("/qr/generate/:size", new QRCodeRoute(qrCodeCache));
-        Spark.post("/qr/generate/:size", new QRCodeRoute(qrCodeCache));
+        Spark.get("/qr/generate/:size", new QRCodeRoute(sharedCache));
+        Spark.post("/qr/generate/:size", new QRCodeRoute(sharedCache));
 
         Spark.post("/wa/chat2json", new ChatExportRoute(new JsonMessagesExporter()));
         Spark.post("/wa/chat2csv", new ChatExportRoute(new CsvMessagesExporter()));
