@@ -12,12 +12,19 @@ import spark.Route;
 import spark.Spark;
 
 import static java.lang.Integer.parseInt;
+import static java.util.Objects.requireNonNull;
 import static me.zikani.labs.pakadali.PakadaliApplication.MEDIA_TYPE_IMAGE_PNG;
 
 public class ImagePlaceholderRoute implements Route {
-    private final Cache<String, byte[]> cache = Caffeine.newBuilder()
-            .maximumSize(1000)
-            .build();
+    private final Cache<String, byte[]> cache;
+
+    public ImagePlaceholderRoute() {
+        this(Caffeine.newBuilder().maximumSize(1000).build());
+    }
+
+    public ImagePlaceholderRoute(Cache<String, byte[]> cache) {
+        this.cache = requireNonNull(cache, "cache");
+    }
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
