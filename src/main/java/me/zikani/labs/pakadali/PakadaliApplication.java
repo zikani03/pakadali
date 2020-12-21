@@ -20,8 +20,8 @@ public class PakadaliApplication {
     public static void main(String[] args) {
         Spark.port(parseInt(getProperty("spark.port", "4567")));
         Cache<String, byte[]> sharedCache = Caffeine.newBuilder()
-            .expireAfterWrite(Duration.ofMinutes(30))
-            .maximumSize(420)
+            .expireAfterWrite(Duration.ofSeconds(parseInt(getProperty("pakadali.cacheExpirySeconds", "1800"))))
+            .maximumSize(parseInt(getProperty("pakadali.cacheMaxSize", "420")))
             .build();
         // Placeholder route
         Spark.staticFileLocation("public");
