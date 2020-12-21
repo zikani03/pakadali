@@ -29,7 +29,7 @@ public class ImagePlaceholderServiceImpl implements PNGImagePlaceHolderService {
     }
 
     private ByteArrayOutputStream generateImage(int width, int height) throws Exception {
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_INDEXED);
         for (int i = 0; i < width; i++)
             for (int j = 0; j < height; j++)
                 bufferedImage.setRGB(i, j, LIGHT_GRAY_RGB);
