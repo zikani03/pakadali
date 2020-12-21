@@ -11,6 +11,7 @@ import spark.Response;
 import spark.Route;
 import spark.Spark;
 
+import static java.lang.System.getProperty;
 import static java.util.Objects.requireNonNull;
 import static me.zikani.labs.pakadali.PakadaliApplication.MEDIA_TYPE_IMAGE_PNG;
 
@@ -34,6 +35,7 @@ public class QRCodeRoute implements Route {
         try {
             byte[] image = qrCodeService.getQRCode(widthAndHeight,content,cache);
             response.type(MEDIA_TYPE_IMAGE_PNG);
+            response.header("Cache-Control", String.format("max-age=%s", getProperty("pakadali.cacheExpirySeconds", "1800")));
             response.raw().getOutputStream().write(image);
             return response;
         }
