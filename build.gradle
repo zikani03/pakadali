@@ -53,10 +53,6 @@ tasks.withType(JavaCompile){
     options.compilerArgs.add('-parameters')
 }
 
-shadowJar {
-    mergeServiceFiles()
-}
-
 task stage(dependsOn: ['shadowJar', 'clean'])
 shadowJar.mustRunAfter clean
 
