@@ -26,7 +26,14 @@ public class ChatReader {
     // The data format that was successful, is for the first message we successfully parse
     private SimpleDateFormat currentFormat = null;
 
+    private String groupOrChatName;
 
+    public ChatReader() {
+        this.groupOrChatName = "unknown";
+    }
+    public ChatReader(String groupOrChatName) {
+        this.groupOrChatName = groupOrChatName;
+    }
     public List<Message> readMessages(InputStream inputStream) throws Exception {
         List<Message> messages = new ArrayList<>();
         try (Scanner sc = new Scanner(inputStream)) {
@@ -87,7 +94,8 @@ public class ChatReader {
                 sender,
                 new String[0], // TODO: Parse mentions...
                 timestamp,
-                matcher.group("message")
+                matcher.group("message"),
+                groupOrChatName
             ));
 
         }

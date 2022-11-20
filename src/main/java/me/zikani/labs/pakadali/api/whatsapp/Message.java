@@ -11,6 +11,8 @@ public class Message {
     private long timestamp;
     private String message;
 
+    private String groupChatName;
+
     @Override
     public String toString() {
         return timestamp + " " + phone + " " + message;

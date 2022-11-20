@@ -4,6 +4,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import me.zikani.labs.pakadali.api.whatsapp.CsvMessagesExporter;
 import me.zikani.labs.pakadali.api.whatsapp.JsonMessagesExporter;
+import me.zikani.labs.pakadali.api.whatsapp.VCardExporter;
 import me.zikani.labs.pakadali.web.placeholder.ImagePlaceholderRoute;
 import me.zikani.labs.pakadali.web.qr.QRCodeRoute;
 import me.zikani.labs.pakadali.web.whatsapp.ChatExportRoute;
@@ -33,6 +34,7 @@ public class PakadaliApplication {
 
         Spark.post("/wa/chat2json", new ChatExportRoute(new JsonMessagesExporter()));
         Spark.post("/wa/chat2csv", new ChatExportRoute(new CsvMessagesExporter()));
+        Spark.post("/wa/vcard", new ChatExportRoute(new VCardExporter()));
 
         Spark.notFound((request, response) -> {
             return "Not found";
